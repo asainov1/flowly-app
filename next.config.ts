@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
       { source: '/api/core/:path*', destination: `${process.env.CORE_URL || 'https://core.flowlyai.kz'}/api/v1/:path*` },
