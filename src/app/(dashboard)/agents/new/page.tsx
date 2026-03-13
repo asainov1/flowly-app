@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
+import { addDemoAgent, getTypeName } from "@/lib/demo-agents";
 
 const agentTypes = [
   {
@@ -216,7 +217,25 @@ export default function NewAgentPage() {
           )}
           <Button
             disabled={step === 0 && !selectedType}
-            onClick={() => setStep(step + 1)}
+            onClick={() => {
+              if (step === 1) {
+                // Save new agent to demo store
+                addDemoAgent({
+                  id: crypto.randomUUID(),
+                  name: name || "Новый агент",
+                  type: getTypeName(selectedType),
+                  organization_id: 1,
+                  status: "active",
+                  model: models.find((m) => m.id === model)?.name || model,
+                  description: description || "",
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  total_messages: 0,
+                  total_dialogues: 0,
+                });
+              }
+              setStep(step + 1);
+            }}
           >
             {step === 1 ? "Создать" : "Далее"}
             <ArrowRight className="h-4 w-4" />
