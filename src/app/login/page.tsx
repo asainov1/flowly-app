@@ -37,6 +37,26 @@ function LoginForm() {
     alert("Google OAuth будет подключён позже");
   };
 
+  const handleDemo = () => {
+    // Create a demo JWT token (header.payload.signature)
+    const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
+    const payload = btoa(
+      JSON.stringify({
+        user_id: 1,
+        email: "demo@flowlyai.kz",
+        first_name: "Demo",
+        last_name: "User",
+        organization_ids: [1],
+        is_superuser: false,
+        is_staff: false,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h
+      })
+    );
+    const token = `${header}.${payload}.demo_signature`;
+    saveToken(token);
+    router.push(next);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#09090b] px-4">
       <div className="w-full max-w-sm">
@@ -51,6 +71,14 @@ function LoginForm() {
         </div>
 
         <div className="glass rounded-xl p-6">
+          {/* Demo mode button */}
+          <button
+            onClick={handleDemo}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-sm font-medium text-white transition-colors mb-4"
+          >
+            Войти как демо
+          </button>
+
           <button
             onClick={handleGoogle}
             className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm font-medium text-white hover:bg-white/10 transition-colors mb-6"
