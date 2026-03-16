@@ -66,7 +66,7 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-2xl font-bold text-white">Дашборд</h1>
         <p className="text-sm text-zinc-500 mt-1">
-          Добро пожаловать, {user?.first_name || user?.email.split("@")[0]}
+          Добро пожаловать, {user?.first_name || user?.email?.split("@")[0] || "User"}
         </p>
       </div>
 

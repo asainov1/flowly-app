@@ -46,6 +46,22 @@ export function OrganizationProvider({ children }: { children: ReactNode }) {
     }
 
     const load = async () => {
+      // Demo mode — skip API entirely
+      const tokenMatch = document.cookie.match(/(?:^|; )flowly_token=([^;]*)/);
+      if (tokenMatch && tokenMatch[1].endsWith(".demo")) {
+        const demoOrg: Organization = {
+          id: 1,
+          name: "Demo Organization",
+          slug: "demo",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+        setOrganizations([demoOrg]);
+        setCurrentOrgState(demoOrg);
+        setLoading(false);
+        return;
+      }
+
       try {
         const res = await coreApi.getOrganizations();
         const orgs = res.results;
@@ -57,7 +73,6 @@ export function OrganizationProvider({ children }: { children: ReactNode }) {
           setCurrentOrgState(saved || orgs[0]);
         }
       } catch {
-        // Fallback: create demo organization
         const demoOrg: Organization = {
           id: 1,
           name: "Demo Organization",
