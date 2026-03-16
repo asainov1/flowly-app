@@ -1,6 +1,6 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
-const TOKEN_KEY = "flowly_token";
-const TOKEN_EXP_KEY = "flowly_token_exp";
+const TOKEN_KEY = "app_token";
+const TOKEN_EXP_KEY = "app_token_exp";
 
 function getToken(): string | null {
   if (typeof window === "undefined") return null;
@@ -102,7 +102,7 @@ async function request<T>(
       // Other services (notifications, analytics, billing) may return 401
       // if they can't validate the token — don't nuke the session for that
       const isAuthEndpoint = path.includes('/api/auth-service/') || path.includes('/api/core/auth/');
-      const tokenMatch = document.cookie.match(/(?:^|; )flowly_token=([^;]*)/);
+      const tokenMatch = document.cookie.match(/(?:^|; )app_token=([^;]*)/);
       const isDemo = tokenMatch && tokenMatch[1].endsWith(".demo");
       if (isAuthEndpoint && !isDemo) {
         removeToken();
