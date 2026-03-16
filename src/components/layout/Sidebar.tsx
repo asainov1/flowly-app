@@ -79,7 +79,7 @@ export function Sidebar() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-white truncate">
-                {user.first_name || user.email.split("@")[0]}
+                {user.first_name || user.email?.split("@")[0] || "User"}
               </p>
               <p className="text-xs text-zinc-500 truncate">{user.email}</p>
             </div>
