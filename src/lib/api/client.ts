@@ -98,10 +98,13 @@ async function request<T>(
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
     if (res.status === 401) {
-      // Don't remove token or redirect in demo mode
+      // Only redirect on auth-specific endpoints, not on every 401
+      // Other services (notifications, analytics, billing) may return 401
+      // if they can't validate the token — don't nuke the session for that
+      const isAuthEndpoint = path.includes('/api/auth-service/') || path.includes('/api/core/auth/');
       const tokenMatch = document.cookie.match(/(?:^|; )flowly_token=([^;]*)/);
       const isDemo = tokenMatch && tokenMatch[1].endsWith(".demo");
-      if (!isDemo) {
+      if (isAuthEndpoint && !isDemo) {
         removeToken();
         if (typeof window !== "undefined") {
           window.location.href = "/login";
