@@ -5,7 +5,7 @@ const PROMPTS_KEY = "flowly_demo_prompts";
 
 function isDemoMode(): boolean {
   if (typeof window === "undefined") return false;
-  const match = document.cookie.match(/(?:^|; )flowly_token=([^;]*)/);
+  const match = document.cookie.match(/(?:^|; )app_token=([^;]*)/);
   if (!match) return false;
   return match[1].endsWith(".demo");
 }

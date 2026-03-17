@@ -47,7 +47,7 @@ export function OrganizationProvider({ children }: { children: ReactNode }) {
 
     const load = async () => {
       // Demo mode — skip API entirely
-      const tokenMatch = document.cookie.match(/(?:^|; )flowly_token=([^;]*)/);
+      const tokenMatch = document.cookie.match(/(?:^|; )app_token=([^;]*)/);
       if (tokenMatch && tokenMatch[1].endsWith(".demo")) {
         const demoOrg: Organization = {
           id: 1,

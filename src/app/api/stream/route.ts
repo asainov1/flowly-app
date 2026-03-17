@@ -6,7 +6,7 @@ const RUNTIME_API_KEY = process.env.RUNTIME_API_KEY || "";
 
 export async function POST(request: NextRequest) {
   try {
-    const token = request.cookies.get("flowly_token")?.value;
+    const token = request.cookies.get("app_token")?.value;
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

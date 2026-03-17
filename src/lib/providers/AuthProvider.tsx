@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       clearTimeout(refreshTimerRef.current);
     }
 
-    const match = document.cookie.match(/(?:^|; )flowly_token_exp=([^;]*)/);
+    const match = document.cookie.match(/(?:^|; )app_token_exp=([^;]*)/);
     if (!match) return;
 
     const exp = parseInt(match[1], 10);
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshUser = useCallback(async () => {
     // Check for demo token first — skip API call entirely
-    const match = document.cookie.match(/(?:^|; )flowly_token=([^;]*)/);
+    const match = document.cookie.match(/(?:^|; )app_token=([^;]*)/);
     if (match && match[1].endsWith(".demo")) {
       try {
         const payload = JSON.parse(atob(match[1].split(".")[1]));
@@ -99,7 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [scheduleRefresh]);
 
   useEffect(() => {
-    const token = document.cookie.match(/(?:^|; )flowly_token=([^;]*)/);
+    const token = document.cookie.match(/(?:^|; )app_token=([^;]*)/);
     if (!token) {
       setLoading(false);
       return;
